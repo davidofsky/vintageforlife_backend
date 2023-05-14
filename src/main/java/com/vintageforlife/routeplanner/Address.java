@@ -1,6 +1,5 @@
 package com.vintageforlife.routeplanner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +14,7 @@ public class Address {
     public String postal;
     String address;
     List<String> coordinates;
+    List<Path> paths = new ArrayList<Path>();
 
     public Address(String street, String number, String city, String postal) throws Exception {
         String address = street + " " + number + ", " + city;
@@ -22,6 +22,23 @@ public class Address {
             address += ", " + postal;
         this.address = address;
         coordinates = OpenRouteService.getCoordinates(address);
+    }
+
+    public double getDistance(Address address) throws Exception {
+        Path path = null;
+
+        for (int i = 0; i < paths.size(); i++) {
+            if (paths.get(i).to == address) {
+                path = paths.get(i);
+            }
+        }
+
+        if (path == null) {
+            path = new Path(this, address);
+            paths.add(0, path);
+        }
+
+        return path.distance;
     }
 
     public static List<Address> parseJson(String json) {

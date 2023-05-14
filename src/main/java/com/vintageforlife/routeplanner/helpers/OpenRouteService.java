@@ -1,6 +1,5 @@
 package com.vintageforlife.routeplanner.helpers;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;

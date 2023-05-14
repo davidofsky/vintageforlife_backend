@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.sun.net.httpserver.HttpServer;
 import com.vintageforlife.routeplanner.helpers.ExchangeHelper;
-import com.vintageforlife.routeplanner.helpers.OpenRouteService;
 
 class App {
     public static void main(String[] args) throws IOException {
@@ -23,9 +22,7 @@ class App {
                 try {
                     System.out.println(first.coordinates);
                     System.out.println(second.coordinates);
-
-                    Double distance = OpenRouteService.getDistance(first.coordinates, second.coordinates);
-                    System.out.println(distance);
+                    System.out.println(first.getDistance(second));
 
                 } catch (Exception e) {
                     e.printStackTrace();

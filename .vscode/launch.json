@@ -5,6 +5,13 @@
             "name": "App",
             "request": "launch",
             "mainClass": "com.vintageforlife.routeplanner.App",
+            "projectName": "vintageforlife"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.vintageforlife.routeplanner.App",
             "projectName": "routeplanner"
         },
         {
