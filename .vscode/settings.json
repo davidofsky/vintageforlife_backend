@@ -1,7 +1,3 @@
 {
-    "cSpell.words": [
-        "devcontainers",
-        "vintageforlife",
-        "vscjava"
-    ]
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

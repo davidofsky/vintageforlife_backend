@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.vintageforlife.routeplanner.App",
+            "projectName": "routeplanner"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.vintageforlife.routeplanner.App",
+            "args": "",
+            "projectName": "routeplanner"
+        }
+    ]
+}
