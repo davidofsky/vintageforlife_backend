@@ -17,12 +17,17 @@ class App {
                 String body = ExchangeHelper.getBody(exchange);
                 List<Address> addressList = Address.parseJson(body);
                 Address first = addressList.get(0);
-                Address second = addressList.get(1);
+                
 
-                try {
-                    System.out.println(first.coordinates);
-                    System.out.println(second.coordinates);
-                    System.out.println(first.getDistance(second));
+                try { 
+                    List<Address> sublist = addressList.subList(1, addressList.size()); 
+                    System.out.println(sublist.size()); 
+
+                    Path testpath = first.shortestPath(sublist); 
+                    System.out.println(testpath.from.address); 
+                    System.out.println(testpath.to.address); 
+                    System.out.println(testpath.distance); 
+                    
 
                 } catch (Exception e) {
                     e.printStackTrace();
