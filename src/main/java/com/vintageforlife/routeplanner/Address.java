@@ -24,7 +24,7 @@ public class Address {
         coordinates = OpenRouteService.getCoordinates(address);
     }
 
-    public double getDistance(Address address) throws Exception {
+    public Path getPath(Address address) throws Exception {
         Path path = null;
 
         for (int i = 0; i < paths.size(); i++) {
@@ -37,8 +37,23 @@ public class Address {
             path = new Path(this, address);
             paths.add(0, path);
         }
+        return path;
+    }
 
-        return path.distance;
+    // haalt dichtstbijzijndste adres op in de lijst. (vanaf zichzelf).
+
+    public Path shortestPath(List<Address> addressList) throws Exception {
+
+        Path shortest = null;
+        for (int i = 0; i < addressList.size(); i++) {
+            Path path = this.getPath(addressList.get(i));
+
+            if (shortest == null || path.distance < shortest.distance) {
+                shortest = path;
+                System.out.println(path.distance); 
+            }
+        }
+        return shortest;
     }
 
     public static List<Address> parseJson(String json) {
