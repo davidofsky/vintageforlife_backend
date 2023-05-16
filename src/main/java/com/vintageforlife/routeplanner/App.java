@@ -14,19 +14,18 @@ class App {
         // routing
         server.createContext("/api", (exchange -> {
             if ("POST".equals(exchange.getRequestMethod())) {
-                String body = ExchangeHelper.getBody(exchange);
-                List<Address> addressList = Address.parseJson(body);
-                Address first = addressList.get(0);
-                
-
                 try { 
-                    List<Address> sublist = addressList.subList(1, addressList.size()); 
-                    System.out.println(sublist.size()); 
+                    String body = ExchangeHelper.getBody(exchange);
+                    List<Address> addressList = Address.parseJson(body);
+                    Address first = addressList.get(0);
 
-                    Path testpath = first.shortestPath(sublist); 
-                    System.out.println(testpath.from.address); 
-                    System.out.println(testpath.to.address); 
-                    System.out.println(testpath.distance); 
+                    // testing out shortest path function
+                    List<Address> subList = addressList.subList(1, addressList.size()); 
+                    System.out.println(subList.size()); 
+                    Path shortest = first.getShortestPath(subList); 
+                    System.out.println(shortest.from.address); 
+                    System.out.println(shortest.to.address); 
+                    System.out.println(shortest.distance); 
                     
 
                 } catch (Exception e) {
