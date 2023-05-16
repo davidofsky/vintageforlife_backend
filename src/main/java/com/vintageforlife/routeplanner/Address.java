@@ -24,33 +24,29 @@ public class Address {
         coordinates = OpenRouteService.getCoordinates(address);
     }
 
+    // Fetch or create path to address
     public Path getPath(Address address) throws Exception {
         Path path = null;
 
+        // get Path from paths list
         for (int i = 0; i < paths.size(); i++) {
-            if (paths.get(i).to == address) {
-                path = paths.get(i);
-            }
+            if (paths.get(i).to == address) path = paths.get(i);
         }
 
-        if (path == null) {
+        if (path == null) { // if path doesn't exists in paths list: create new path
             path = new Path(this, address);
             paths.add(0, path);
         }
         return path;
     }
 
-    // haalt dichtstbijzijndste adres op in de lijst. (vanaf zichzelf).
-
-    public Path shortestPath(List<Address> addressList) throws Exception {
-
+    // Return the path to the closest address in the list
+    public Path getShortestPath(List<Address> addressList) throws Exception {
         Path shortest = null;
         for (int i = 0; i < addressList.size(); i++) {
             Path path = this.getPath(addressList.get(i));
-
             if (shortest == null || path.distance < shortest.distance) {
-                shortest = path;
-                System.out.println(path.distance); 
+                shortest = path; 
             }
         }
         return shortest;
