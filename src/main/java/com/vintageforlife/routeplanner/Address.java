@@ -26,6 +26,7 @@ public class Address {
 
     // Fetch or create path to address
     public Path getPath(Address address) throws Exception {
+        if (address == this)return null; 
         Path path = null;
 
         // get Path from paths list
@@ -40,11 +41,20 @@ public class Address {
         return path;
     }
 
+
     // Return the path to the closest address in the list
     public Path getShortestPath(List<Address> addressList) throws Exception {
         Path shortest = null;
         for (int i = 0; i < addressList.size(); i++) {
-            Path path = this.getPath(addressList.get(i));
+   
+            Address address = addressList.get(i); 
+
+            System.out.println(this.address + " - "  + address.address);
+
+            if (address == this) continue; 
+            
+            Path path = this.getPath(address);
+
             if (shortest == null || path.distance < shortest.distance) {
                 shortest = path; 
             }
