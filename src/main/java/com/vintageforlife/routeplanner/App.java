@@ -18,9 +18,7 @@ class App {
                     String body = ExchangeHelper.getBody(exchange);
                     List<Address> addressList = Address.parseJson(body);
                     Route route = new Route(addressList); 
-                    System.out.println("jeej geen crash op de route! ");
-                    
-
+                    ExchangeHelper.respond(exchange, 200, route.toString()); 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
