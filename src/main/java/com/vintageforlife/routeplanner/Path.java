@@ -7,10 +7,15 @@ public class Path {
     public Address to;
     public double distance;
 
-    public Path(Address from, Address to) throws Exception {
+    public Path(Address from, Address to, boolean getDistance) throws Exception {
         this.from = from;
         this.to = to;
-        this.distance = OpenRouteService.getDistance(from.coordinates, to.coordinates);
+        if (getDistance) {
+            this.distance = OpenRouteService.getDistance(from.coordinates, to.coordinates);
+        }
     }
 
+    public Path(Address from, Address to) throws Exception {
+        this(from, to, true);
+    }
 }

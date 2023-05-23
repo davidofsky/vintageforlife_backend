@@ -17,17 +17,8 @@ class App {
                 try { 
                     String body = ExchangeHelper.getBody(exchange);
                     List<Address> addressList = Address.parseJson(body);
-                    Address first = addressList.get(0);
-
-                    // testing out shortest path function
-                    List<Address> subList = addressList.subList(1, addressList.size()); 
-                    System.out.println(subList.size()); 
-                    Path shortest = first.getShortestPath(subList); 
-                    System.out.println(shortest.from.address); 
-                    System.out.println(shortest.to.address); 
-                    System.out.println(shortest.distance); 
-                    
-
+                    Route route = new Route(addressList); 
+                    ExchangeHelper.respond(exchange, 200, route.toString()); 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
