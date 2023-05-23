@@ -59,6 +59,24 @@ public class Route {
     //         List<Address> unvisitedTo = addresses;
     //         unvisitedTo.removeAll(visitedTo);
 
+
+
+        // aanvulling / idee?  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+
+
+// List<Address> unvisitedFrom = new ArrayList<>(addresses);
+// unvisitedFrom.removeAll(visitedFrom);
+
+// List<Address> unvisitedTo = new ArrayList<>(addresses);
+// unvisitedTo.removeAll(visitedTo);
+
+//In Java, when you assign a list to another list variable, it creates a reference to the same list, not a separate copy. Therefore, the removal of 
+//elements from unvisitedFrom and unvisitedTo also affects the original addresses list. This unintended modification causes subsequent iterations to behave incorrectly.
+// To fix this issue, you need to create separate copies of the addresses list before removing the visited addresses.
+
+
+// einde aanvulling / idee. . . . . . . . . .. . . . . . .  . . . . 
+
     //             System.out.println();
     //         for (int i = 0; i < unvisitedFrom.size(); i++) {
     //             Address address = unvisitedFrom.get(i);
