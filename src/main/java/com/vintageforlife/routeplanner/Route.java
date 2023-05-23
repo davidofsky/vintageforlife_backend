@@ -10,22 +10,24 @@ public class Route {
 
     public Route(List<Address> addresses) throws Exception {
         this.addresses = addresses;
-        NearestNeighborRoute();
+        ChristofidesRoute();
     }
 
-    /* NN algorithm
-     add first address to route and remove from unvisited list
-     do the following until route has all addresses:
-        get next shortest path from last index from route   
-        add next address to route
-        remove next address from unvisited list
-    */
+    /*
+     * NN algorithm
+     * add first address to route and remove from unvisited list
+     * do the following until route has all addresses:
+     * get next shortest path from last index from route
+     * add next address to route
+     * remove next address from unvisited list
+     */
+    
     public void NearestNeighborRoute() throws Exception {
-        route.add(addresses.get(0)); 
+        route.add(addresses.get(0));
         List<Address> unvisited = new ArrayList<Address>(addresses);
         unvisited.remove(addresses.get(0));
-        while(route.size() < addresses.size()) {
-            Address address = route.get(route.size()-1);
+        while (route.size() < addresses.size()) {
+            Address address = route.get(route.size() - 1);
             Path nextPath = address.getShortestPath(unvisited);
             route.add(nextPath.to);
             unvisited.remove(nextPath.to);
@@ -36,66 +38,20 @@ public class Route {
     public String toString() {
         String returnValue = "[";
         for (int i = 0; i < route.size(); i++) {
-            returnValue+= route.get(i).toString() + ",";
+            returnValue += route.get(i).toString() + ",";
         }
-        returnValue += route.get(0).toString();
+        // returnValue += route.get(0).toString();
         returnValue += "]";
         return returnValue;
     }
 
+    public void ChristofidesRoute() throws Exception {
+        List<Path> mst = Mst.generate(addresses);
+        for (int i = 0; i < mst.size(); i++) {
+            route.add(mst.get(i).to);
+        }
 
-    // private void GreedyRoute() throws Exception {
+        route.add(route.get(0));
+    }
 
-    //     List<Address> visitedTo = new ArrayList<Address>();
-    //     List<Address> visitedFrom = new ArrayList<Address>();
-
-    //     Path shortest = null;
-
-    //     while (route.size() < addresses.size()-1) {
-    //         List<Address> unvisitedFrom = addresses;
-    //         unvisitedFrom.removeAll(visitedFrom);
-    //         System.out.println(visitedFrom.size() + " " + unvisitedFrom.size());
-
-    //         List<Address> unvisitedTo = addresses;
-    //         unvisitedTo.removeAll(visitedTo);
-
-
-
-        // aanvulling / idee?  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
-
-
-// List<Address> unvisitedFrom = new ArrayList<>(addresses);
-// unvisitedFrom.removeAll(visitedFrom);
-
-// List<Address> unvisitedTo = new ArrayList<>(addresses);
-// unvisitedTo.removeAll(visitedTo);
-
-//In Java, when you assign a list to another list variable, it creates a reference to the same list, not a separate copy. Therefore, the removal of 
-//elements from unvisitedFrom and unvisitedTo also affects the original addresses list. This unintended modification causes subsequent iterations to behave incorrectly.
-// To fix this issue, you need to create separate copies of the addresses list before removing the visited addresses.
-
-
-// einde aanvulling / idee. . . . . . . . . .. . . . . . .  . . . . 
-
-    //             System.out.println();
-    //         for (int i = 0; i < unvisitedFrom.size(); i++) {
-    //             Address address = unvisitedFrom.get(i);
-    //             System.out.println(address.address);
-
-    //             // skip if address already has two vertices
-    //             if (visitedFrom.contains(address) && visitedTo.contains(address)) {
-    //                 continue;
-    //             }
-
-    //             Path path = addresses.get(i).getShortestPath(unvisitedTo);
-    //             if (shortest == null || path.distance < shortest.distance) {
-    //                 shortest = path;
-    //             }
-    //         }
-
-    //         route.add(shortest);
-    //         visitedFrom.add(shortest.from);
-    //         visitedTo.add(shortest.to);
-    //     }
-    // }
 }
