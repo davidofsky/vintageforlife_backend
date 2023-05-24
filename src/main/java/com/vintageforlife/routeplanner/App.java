@@ -11,13 +11,25 @@ class App {
         int port = 8000;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 1);
 
+
         // routing
         server.createContext("/api", (exchange -> {
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
+            if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+                exchange.sendResponseHeaders(204, -1);
+                return;
+            }
+
             if ("POST".equals(exchange.getRequestMethod())) {
                 try { 
                     String body = ExchangeHelper.getBody(exchange);
                     List<Address> addressList = Address.parseJson(body);
                     Route route = new Route(addressList); 
+
+                    exchange.getResponseHeaders().add("content-type", "application/json");
                     ExchangeHelper.respond(exchange, 200, route.toString()); 
                 } catch (Exception e) {
                     e.printStackTrace();
