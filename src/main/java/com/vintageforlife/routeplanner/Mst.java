@@ -38,19 +38,15 @@ public class Mst {
             }
             visited.add(shortest.to);
             unvisited.remove(shortest.to);
-            mst.add(shortest);
-        }
 
-        // close any gaps between mst to keep everything connected
-        for (int i1 = 0; i1 < mst.size() - 1; i1++) {
-            for (int i2 = i1 + 1; i2 < mst.size(); i2++) {
-                if ((mst.get(i2).from == mst.get(i1).to || mst.get(i2).from == mst.get(0).from)&&
-                        mst.get(i2 - 1).from != mst.get(i1).to) {
-                    Path copy = mst.get(i2);
-                    mst.remove(i2);
-                    mst.add(i1 + 1, copy);
+            int indexNr = 0;
+            for (int i = 0; i < mst.size(); i++) {
+                indexNr++;
+                if (mst.get(i).to == shortest.from) {
+                    break;
                 }
             }
+            mst.add(indexNr, shortest);
         }
 
         System.out.println();
