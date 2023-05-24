@@ -38,6 +38,13 @@ public class Route {
         route = Mst.generate(addresses);
         route.get(0).from = route.get(route.size()-1).to;
         route.get(0).getDistance();
+        for (int i = 1; i < route.size(); i++) {
+            if (route.get(i).from != route.get(i-1).to) {
+                Path replaced = route.get(i-1).to.getPath(route.get(i).to);
+                route.remove(i);
+                route.add(i, replaced);
+            }
+        }
     }
 
     public void setBbox() {
@@ -64,9 +71,9 @@ public class Route {
         setBbox();
         String returnValue = "{\"bbox\": "+bbox.toString()+", \"route\":[";
         for (int i = 0; i < route.size(); i++) {
-            returnValue += "{ \"Address\": \"";
+            returnValue += "{ \"address\": \"";
             returnValue += route.get(i).to.address + "\",";
-            returnValue += "\"Path\": " + route.get(i).pathCoordinates;
+            returnValue += "\"path\": " + route.get(i).pathCoordinates;
             returnValue += "}";
             if(i < route.size()-1) {
                 returnValue += ",";

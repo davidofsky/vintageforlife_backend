@@ -13,7 +13,7 @@ import com.jayway.jsonpath.JsonPath;
 
 public class OpenRouteService {
     static private String baseUrl = "https://api.openrouteservice.org";
-    static private String apiKeyParam = "api_key=5b3ce3597851110001cf62489742ff7ee3cb432b8e60eec5bab84852";
+    static private String apiKeyParam = "api_key=" + System.getenv("APIKEY");
 
     public static List<String> getCoordinates(String address) throws Exception {
         String geoCodeUrl = baseUrl + "/geocode/search";
