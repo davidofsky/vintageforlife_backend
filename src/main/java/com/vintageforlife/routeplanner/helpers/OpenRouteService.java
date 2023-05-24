@@ -24,12 +24,14 @@ public class OpenRouteService {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("ORS responded with status: " + response.statusCode());
         String jsonpathCoordinatesPath = "features[0].geometry.coordinates";
         DocumentContext jsonContext = JsonPath.parse(response.body());
         return jsonContext.read(jsonpathCoordinatesPath);
     }
 
-    public static Double getDistance(List<String> coordsStart, List<String> coordsEnd) throws Exception {
+    // returns response from ORS as DocumentContext
+    public static DocumentContext getDistance(List<String> coordsStart, List<String> coordsEnd) throws Exception {
         String coordsStartString = coordsStart.toString();
         String coordsEndString = coordsEnd.toString();
 
@@ -42,9 +44,9 @@ public class OpenRouteService {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
 
+
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        String jsonpathCoordinatesPath = "$.features[0].properties.summary.duration";
-        DocumentContext jsonContext = JsonPath.parse(response.body());
-        return jsonContext.read(jsonpathCoordinatesPath);
+        System.out.println("ORS responded with status: " + response.statusCode());
+        return JsonPath.parse(response.body());
     }
 }
