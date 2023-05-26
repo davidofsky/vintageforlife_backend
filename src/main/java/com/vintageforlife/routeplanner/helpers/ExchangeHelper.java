@@ -13,9 +13,10 @@ import com.sun.net.httpserver.HttpExchange;
 public class ExchangeHelper {
     public static void respond(HttpExchange httpExchange, int code, String message ) {
         try {
-            httpExchange.sendResponseHeaders(code, message.length());
+            byte[] bs = message.getBytes("UTF-8");
+            httpExchange.sendResponseHeaders(code, bs.length);
             OutputStream os = httpExchange.getResponseBody();
-            os.write(message.getBytes());
+            os.write(bs);
             os.close();
             httpExchange.close();
         } catch (Exception e) {
