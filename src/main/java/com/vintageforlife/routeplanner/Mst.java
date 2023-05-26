@@ -49,7 +49,6 @@ public class Mst {
             mst.add(indexNr, shortest);
         }
 
-        System.out.println();
         return mst;
     }
 

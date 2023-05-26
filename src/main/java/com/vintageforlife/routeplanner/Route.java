@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Route {
-
     public List<Address> addresses = new ArrayList<Address>();
-    public List<Address> route = new ArrayList<Address>();
+    public List<Path> route = new ArrayList<Path>();
+    List<Double> bbox = new ArrayList<Double>();
 
     public Route(List<Address> addresses) throws Exception {
         this.addresses = addresses;
@@ -23,35 +23,63 @@ public class Route {
      */
     
     public void NearestNeighborRoute() throws Exception {
-        route.add(addresses.get(0));
+        route.add(new Path(null, addresses.get(0), false));
         List<Address> unvisited = new ArrayList<Address>(addresses);
         unvisited.remove(addresses.get(0));
         while (route.size() < addresses.size()) {
-            Address address = route.get(route.size() - 1);
+            Address address = route.get(route.size() - 1).to;
             Path nextPath = address.getShortestPath(unvisited);
-            route.add(nextPath.to);
+            route.add(nextPath);
             unvisited.remove(nextPath.to);
         }
     }
 
+    public void ChristofidesRoute() throws Exception {
+        route = Mst.generate(addresses);
+        route.get(0).from = route.get(route.size()-1).to;
+        route.get(0).getDistance();
+        for (int i = 1; i < route.size(); i++) {
+            if (route.get(i).from != route.get(i-1).to) {
+                Path replaced = route.get(i-1).to.getPath(route.get(i).to);
+                route.remove(i);
+                route.add(i, replaced);
+            }
+        }
+    }
+
+    public void setBbox() {
+        this.bbox = route.get(0).bbox;
+        for (Path path : route) {
+            if (path.bbox.get(0) < this.bbox.get(0)) {
+                bbox.set(0, path.bbox.get(0));
+            }
+            if (path.bbox.get(1) < this.bbox.get(1)) {
+                bbox.set(1, path.bbox.get(1));
+            }
+            if (path.bbox.get(2) > this.bbox.get(2)) {
+                bbox.set(2, path.bbox.get(2));
+            }
+            if (path.bbox.get(3) > this.bbox.get(3)) {
+                bbox.set(3, path.bbox.get(3));
+            }
+        }
+    }
+
+
     @Override
     public String toString() {
-        String returnValue = "[";
+        setBbox();
+        String returnValue = "{\"bbox\": "+bbox.toString()+", \"route\":[";
         for (int i = 0; i < route.size(); i++) {
-            returnValue += route.get(i).toString() + ",";
+            returnValue += "{ \"address\": \"";
+            returnValue += route.get(i).to.address + "\",";
+            returnValue += "\"path\": " + route.get(i).pathCoordinates;
+            returnValue += "}";
+            if(i < route.size()-1) {
+                returnValue += ",";
+            }
         }
-        // returnValue += route.get(0).toString();
-        returnValue += "]";
+        returnValue += "]}";
         return returnValue;
     }
-
-    public void ChristofidesRoute() throws Exception {
-        List<Path> mst = Mst.generate(addresses);
-        for (int i = 0; i < mst.size(); i++) {
-            route.add(mst.get(i).to);
-        }
-
-        route.add(route.get(0));
-    }
-
 }
