@@ -12,11 +12,12 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
 public class OpenRouteService {
-    static private String baseUrl = "https://api.openrouteservice.org";
-    static private String apiKeyParam = "api_key=" + System.getenv("APIKEY");
+    static private String baseUrl = System.getenv("ORS");
+    static private String orsDefault = System.getenv("ORS_PUBLIC");
+    static private String apiKeyParam = "api_key=" + System.getenv("API_KEY");
 
     public static List<String> getCoordinates(String address) throws Exception {
-        String geoCodeUrl = baseUrl + "/geocode/search";
+        String geoCodeUrl = orsDefault + "/geocode/search";
         String textParam = "text=" + URLEncoder.encode(address, StandardCharsets.UTF_8);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -24,6 +25,7 @@ public class OpenRouteService {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(request.uri());
         System.out.println("ORS responded with status: " + response.statusCode());
         String jsonpathCoordinatesPath = "features[0].geometry.coordinates";
         DocumentContext jsonContext = JsonPath.parse(response.body());
@@ -43,6 +45,7 @@ public class OpenRouteService {
                 .uri(URI.create(directionsUrl + "?" + apiKeyParam + "&" + startParam + "&" + endParam))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
+        System.out.println(request.uri());
 
 
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
