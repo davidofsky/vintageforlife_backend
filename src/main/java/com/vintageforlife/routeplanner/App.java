@@ -36,7 +36,15 @@ class App {
             if ("POST".equals(exchange.getRequestMethod())) {
                 try { 
                     String body = ExchangeHelper.getBody(exchange);
-                    List<Address> addressList = Address.parseJson(body);
+                    List<Address> addressList = null;
+                    try {
+                        addressList = Address.parseJson(body);
+                    } catch (Exception e) {
+                        ExchangeHelper.respond(exchange, 400, "Expected list of addresses inside body"); 
+                        exchange.close();
+                        return;
+                    }
+
                     // create route of addresses
                     Route route = new Route(addressList); 
                     // add application/json header to response and return the route

@@ -1,3 +1,26 @@
+# API
+The api expects the following request:
+
+| Method | Location | 
+| ------ | -------- | 
+| POST   | /api     | 
+
+<b>Example body:</b>
+```json
+{
+    "addresses": [
+        "Amsterdam", 
+        "Utrecht", 
+        "Zwolle", 
+        "Enschede"
+    ]
+}
+```
+
+---
+
+<br>
+
 # Running the project locally
 To run this project locally, you can use the provided dockerfile and docker-compose.yml <br>
 (If you have Docker and docker-compose installed). <br>
