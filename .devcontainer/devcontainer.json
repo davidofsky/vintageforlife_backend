@@ -28,7 +28,18 @@
 				"streetsidesoftware.code-spell-checker"
 			]
 		}
-	}
+	},
+
+	"containerEnv": {
+		"PORT": "8000",
+		"ORS": "https://api.openrouteservice.org",
+		"ORS_PUBLIC": "https://api.openrouteservice.org",
+		"API_KEY": "5b3ce3597851110001cf62489742ff7ee3cb432b8e60eec5bab84852"
+	},
+
+	"runArgs": [
+    "--network=desktop_vscode"
+	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

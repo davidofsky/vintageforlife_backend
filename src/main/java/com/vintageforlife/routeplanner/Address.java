@@ -10,7 +10,7 @@ import com.vintageforlife.routeplanner.helpers.OpenRouteService;
 public class Address {
     String address;
     List<String> coordinates;
-    List<Path> paths = new ArrayList<Path>();
+    List<Path> paths = new ArrayList<Path>(); // store paths that have been created (to avoid retrieving the path again)
 
     public Address(String address) throws Exception {
         this.address = address;

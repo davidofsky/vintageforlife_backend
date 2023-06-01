@@ -34,6 +34,25 @@ public class Route {
         }
     }
 
+
+    /*
+     * Uses the mst to create the route
+     * 
+     * Note that the mst is formatted as a list of paths, ordered by path.from 
+     * example mst format:
+     *   - null -> address1
+     *   - address1 -> address2
+     *   - address2 -> address3
+     *   - address2 -> address4
+     *   - address4 -> address5
+     * 
+     * This means that, in order to create a route, the following must be done:
+     *  1. Create a new route (list of paths) filled with the mst
+     *  2. Make the route loop by adding the last address to the first path.from and calc the distance
+     *  3. Remove backtracking by iterating over the paths and doing the following:
+     *      if the 'iterator path' does not start where the last path ended:
+     *          replace the iterator path.from with the last path.to
+     */
     public void ChristofidesRoute() throws Exception {
         route = Mst.generate(addresses);
         route.get(0).from = route.get(route.size()-1).to;
@@ -47,6 +66,7 @@ public class Route {
         }
     }
 
+    // get the biggest size of all the bboxes of paths to create the bbox of the route
     public void setBbox() {
         this.bbox = route.get(0).bbox;
         for (Path path : route) {
