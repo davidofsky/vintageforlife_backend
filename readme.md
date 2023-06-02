@@ -38,7 +38,7 @@ It is recommended to open this project inside of a vscode DevContainer to make s
 
 To do this, you need to have Docker installed and open this project in vscode. <br>
 Next, make sure you have the Docker and DevContainer extension installed. <br>
-Then press `ctrl + shift + P` and select `Dev Containers: Reopen Folder Locally`
+Then press `ctrl + shift + P` and select `Dev Containers: Rebuild and Reopen in Container`
 
 <br>
 
